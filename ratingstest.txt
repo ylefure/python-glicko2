@@ -1,0 +1,3 @@
+coriollis,1000,250,0.07
+smarterchess,2000,100,0.06
+ChessPriyome,1800,200,0.05
