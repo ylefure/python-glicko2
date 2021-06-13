@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 from math import *
@@ -9,13 +9,13 @@ import csv
 from tabulate import tabulate
 
 
-# In[2]:
+# In[ ]:
 
 
 tau = 0.2 #System constant
 
 
-# In[3]:
+# In[ ]:
 
 
 # Step 1:
@@ -33,7 +33,7 @@ with open('ratingstest.txt','r') as datafile:
 #    player_row[j][3]: volatility
 
 
-# In[4]:
+# In[ ]:
 
 
 # Create a dictionary for ratings, RDs and volatilities
@@ -49,7 +49,7 @@ opp_RD = {player_data[0]:[] for player_data in player_rows}
 score = {player_data[0]:[] for player_data in player_rows}
 
 
-# In[5]:
+# In[ ]:
 
 
 # For comparison, a table with initial values:
@@ -59,7 +59,7 @@ for player in player_list:
 print(tabulate(initial_table,headers='firstrow'))
 
 
-# In[6]:
+# In[ ]:
 
 
 # Update dictionaries for ratings and RDs
@@ -69,7 +69,7 @@ for player in player_list:
     RD[player] = RD[player]/173.7178
 
 
-# In[7]:
+# In[ ]:
 
 
 #Defining useful functions
@@ -109,7 +109,7 @@ def E(mu, mu_j, phi_j):
     return 1/(1 + exp(-g(phi_j)*(mu - mu_j)))
 
 
-# In[8]:
+# In[ ]:
 
 
 # where the new values will be stored:
@@ -118,7 +118,7 @@ RD_new = {}
 volatility_new = {}
 
 
-# In[9]:
+# In[ ]:
 
 
 # Game results in this cell. Always specify game details (date, players, event, round, etc.) in notes.
@@ -127,7 +127,7 @@ game('ChessPriyome','coriollis',1)
 game('smarterchess','ChessPriyome',0.5)
 
 
-# In[10]:
+# In[ ]:
 
 
 # Main algorithm:
@@ -200,7 +200,7 @@ for player in player_list:
     rating_new[player] = mu_prime
 
 
-# In[11]:
+# In[ ]:
 
 
 # Glicko-2 to Glicko conversion (step 8):
@@ -210,7 +210,7 @@ for player in player_list:
     volatility_new[player] = round(volatility_new[player], 3)
 
 
-# In[12]:
+# In[ ]:
 
 
 # creating output txt file
@@ -220,7 +220,7 @@ with open('testoutput.txt', 'w') as output_file:
         result_writer.writerow([player, rating_new[player], RD_new[player], volatility_new[player]])
 
 
-# In[13]:
+# In[ ]:
 
 
 # creating table to share on Discord:
