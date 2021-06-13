@@ -1,21 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
 
 from math import *
 import csv
 from tabulate import tabulate
 
 
-# In[ ]:
-
-
 tau = 0.2 #System constant
-
-
-# In[ ]:
 
 
 # Step 1:
@@ -33,9 +25,6 @@ with open('ratingstest.txt','r') as datafile:
 #    player_row[j][3]: volatility
 
 
-# In[ ]:
-
-
 # Create a dictionary for ratings, RDs and volatilities
 rating = {player_data[0]:float(player_data[1]) for player_data in player_rows}
 RD = {player_data[0]:float(player_data[2]) for player_data in player_rows}
@@ -49,9 +38,6 @@ opp_RD = {player_data[0]:[] for player_data in player_rows}
 score = {player_data[0]:[] for player_data in player_rows}
 
 
-# In[ ]:
-
-
 # For comparison, a table with initial values:
 initial_table = [['Player', 'Rating', 'RD']]
 for player in player_list:
@@ -59,17 +45,11 @@ for player in player_list:
 print(tabulate(initial_table,headers='firstrow'))
 
 
-# In[ ]:
-
-
 # Update dictionaries for ratings and RDs
 # in Glicko-2 scale (step 2)
 for player in player_list:
     rating[player] = (rating[player] - 1500)/173.7178
     RD[player] = RD[player]/173.7178
-
-
-# In[ ]:
 
 
 #Defining useful functions
@@ -109,25 +89,17 @@ def E(mu, mu_j, phi_j):
     return 1/(1 + exp(-g(phi_j)*(mu - mu_j)))
 
 
-# In[ ]:
-
-
 # where the new values will be stored:
 rating_new = {}
 RD_new = {}
 volatility_new = {}
 
 
-# In[ ]:
-
-
 # Game results in this cell. Always specify game details (date, players, event, round, etc.) in notes.
-game('coriollis','smarterchess',-1)
-game('ChessPriyome','coriollis',1)
-game('smarterchess','ChessPriyome',0.5)
 
 
-# In[ ]:
+
+#----------#
 
 
 # Main algorithm:
@@ -200,9 +172,6 @@ for player in player_list:
     rating_new[player] = mu_prime
 
 
-# In[ ]:
-
-
 # Glicko-2 to Glicko conversion (step 8):
 for player in player_list:
     rating_new[player] = round(rating_new[player]*173.7178 + 1500)
@@ -210,17 +179,11 @@ for player in player_list:
     volatility_new[player] = round(volatility_new[player], 3)
 
 
-# In[ ]:
-
-
 # creating output txt file
 with open('testoutput.txt', 'w') as output_file:
     result_writer = csv.writer(output_file, delimiter=',')
     for player in player_list:
         result_writer.writerow([player, rating_new[player], RD_new[player], volatility_new[player]])
-
-
-# In[ ]:
 
 
 # creating table to share on Discord:
