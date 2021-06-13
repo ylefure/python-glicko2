@@ -4,7 +4,7 @@
 
 from math import *
 import csv
-from tabulate import tabulate
+from tabulate import tabulate # to install: pip install tabulate
 
 
 tau = 0.2 #System constant
